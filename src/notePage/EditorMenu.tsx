@@ -11,6 +11,7 @@ interface IProps {
   noteBody: string;
   setNoteBody: Function;
   setNoteLastUpdate: Function;
+  setMessageUseCase: Function;
 }
 
 const EditorMenu: FunctionComponent<IProps> = ({
@@ -23,12 +24,15 @@ const EditorMenu: FunctionComponent<IProps> = ({
   noteBody,
   setNoteBody,
   setNoteLastUpdate,
+  setMessageUseCase,
 }) => {
   return (
     <div className="flex space-x-4">
       <button
-        className="flex my-auto hover:scale-110 transition-all"
-        onClick={() => {}}
+        className="my-auto hover:scale-110 transition-all"
+        onClick={() => {
+          setMessageUseCase("deleteNote");
+        }}
       >
         <img
           src="/icons/delete.svg"
@@ -37,7 +41,7 @@ const EditorMenu: FunctionComponent<IProps> = ({
         />
       </button>
       <button
-        className="flex my-auto hover:scale-110 transition-all"
+        className="my-auto hover:scale-110 transition-all"
         onClick={() => {
           if (editar) {
             if (noteId === "new") {
@@ -66,7 +70,7 @@ const EditorMenu: FunctionComponent<IProps> = ({
         )}
       </button>
       <button
-        className="flex my-auto hover:scale-110 transition-all"
+        className="my-auto hover:scale-110 transition-all"
         onClick={() => {
           setNoteId("");
           setNoteBody("");

@@ -4,6 +4,7 @@ import EditorMenu from "./EditorMenu";
 import { getNoteById } from "../apiCalls";
 import { Note } from "../assets/types";
 import NoNoteMenu from "./NoNoteMenu";
+import Message from "./Message";
 
 const NoteEditor: FunctionComponent = () => {
   const [editar, setEditar] = useState(false);
@@ -11,6 +12,7 @@ const NoteEditor: FunctionComponent = () => {
   const [noteTitle, setNoteTitle] = useState("");
   const [noteId, setNoteId] = useContext(NoteContext);
   const [noteLastUpdate, setNoteLastUpdate] = useState(new Date());
+  const [messageUseCase, setMessageUseCase] = useState("");
 
   // get note info every time the id changes
   useEffect(() => {
@@ -27,6 +29,14 @@ const NoteEditor: FunctionComponent = () => {
   useEffect(() => {
     setEditar(false);
   }, [noteId]);
+
+  // ensure that message only shows for 10 seconds
+  useEffect(() => {
+    if (messageUseCase !== "")
+      setTimeout(() => {
+        setMessageUseCase("");
+      }, 10000);
+  }, [messageUseCase]);
 
   return (
     <div className="noteEditor">
@@ -46,7 +56,6 @@ const NoteEditor: FunctionComponent = () => {
                   value={noteTitle}
                   onChange={(e) => setNoteTitle(e.target.value)}
                 ></input>
-                {/* BOTONES DE EDITAR, CERRAR Y GUARDAR */}
                 <EditorMenu
                   editar={editar}
                   setEditar={setEditar}
@@ -57,6 +66,13 @@ const NoteEditor: FunctionComponent = () => {
                   noteBody={noteBody}
                   setNoteBody={setNoteBody}
                   setNoteLastUpdate={setNoteLastUpdate}
+                  setMessageUseCase={setMessageUseCase}
+                />
+              </div>
+              <div hidden={messageUseCase === ""}>
+                <Message
+                  messageUseCase={messageUseCase}
+                  setMessageUseCase={setMessageUseCase}
                 />
               </div>
               <textarea
