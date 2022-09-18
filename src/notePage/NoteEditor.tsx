@@ -3,6 +3,7 @@ import NoteContext from "./NoteContext";
 import EditorMenu from "./EditorMenu";
 import { getNoteById } from "../apiCalls";
 import { Note } from "../assets/types";
+import NoNoteMenu from "./NoNoteMenu";
 
 const NoteEditor: FunctionComponent = () => {
   const [editar, setEditar] = useState(false);
@@ -32,25 +33,7 @@ const NoteEditor: FunctionComponent = () => {
       <NoteContext.Consumer>
         {([noteId]) =>
           noteId == "" ? (
-            <div className="grid place-content-center h-full space-y-4">
-              <p className={"max-w-[270px] text-center"}>
-                Selecciona una nota para editarla o crea una nueva
-              </p>
-              <button
-                className="flex p-2 rounded-lg border-gray-200 border-2 place-content-center"
-                onClick={() => {
-                  setNoteId("new");
-                  setEditar(true);
-                }}
-              >
-                <img
-                  src="/icons/add.svg"
-                  alt="add button"
-                  className="h-5 my-auto"
-                />
-                <p className="my-auto ml-2">Nueva nota</p>
-              </button>
-            </div>
+            <NoNoteMenu setNoteId={setNoteId} setEditar={setEditar} />
           ) : (
             <span>
               <div className="h-[6vh] flex justify-between mx-4">
