@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.cjs",
+  "scripts": {
+    "dev": "nodemon index.cjs",
+    "migrate": "knex migrate:latest --knexfile ./knexfile.js",
+    "makeseed": "knex seed:make development ./knexfile.js",
+    "seed": "knex seed:run --knexfile ./knexfile.js",
+    "unmigrate": "knex migrate:down --knexfile ./knexfile.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "knex": "^2.3.0",
+    "nodemon": "^2.0.19",
+    "objection": "^3.0.1",
+    "pg": "^8.8.0"
+  }
+}
