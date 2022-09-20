@@ -1,11 +1,11 @@
 import { FunctionComponent } from "react";
 
 interface IProps {
-  setNoteId: Function;
+  setId: Function;
   setEditar: Function;
 }
 
-const NoNoteMenu: FunctionComponent<IProps> = ({ setNoteId, setEditar }) => {
+const NoNoteMenu: FunctionComponent<IProps> = ({ setId, setEditar }) => {
   return (
     <div className="grid place-content-center h-full space-y-4">
       <p className={"max-w-[270px] text-center"}>
@@ -14,7 +14,7 @@ const NoNoteMenu: FunctionComponent<IProps> = ({ setNoteId, setEditar }) => {
       <button
         className="flex p-2 rounded-lg border-gray-200 border-2 place-content-center"
         onClick={() => {
-          setNoteId("new");
+          setId("new");
           setEditar(true);
         }}
       >

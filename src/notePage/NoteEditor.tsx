@@ -1,49 +1,51 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
-import NoteContext from "./NoteContext";
 import EditorMenu from "./EditorMenu";
 import { getNoteById } from "../apiCalls";
 import { Note } from "../assets/types";
 import NoNoteMenu from "./NoNoteMenu";
 import Message from "./Message";
+import { NoteContext } from "../App";
 
 const NoteEditor: FunctionComponent = () => {
   const [editar, setEditar] = useState(false);
-  const [noteBody, setNoteBody] = useState("");
-  const [noteTitle, setNoteTitle] = useState("");
-  const [noteId, setNoteId] = useContext(NoteContext);
-  const [noteLastUpdate, setNoteLastUpdate] = useState(new Date());
   const [messageUseCase, setMessageUseCase] = useState("");
+
+  const { id, setId, body, setBody, title, setTitle, updatedAt, setUpdatedAt } =
+    useContext(NoteContext);
 
   // get note info every time the id changes
   useEffect(() => {
-    if (noteId !== "" && noteId !== "new") {
-      getNoteById(noteId).then((note: Note) => {
-        setNoteBody(note.body);
-        setNoteTitle(note.title);
-        setNoteLastUpdate(new Date(note.updated_at.slice(0, -1)));
+    if (id !== "" && id !== "new") {
+      getNoteById(id).then((note: Note) => {
+        const updated_at = new Date(note.updated_at.slice(0, -1));
+        setBody(note.body);
+        setTitle(note.title);
+        setUpdatedAt(
+          `${updated_at.toLocaleDateString()} - ${updated_at.toLocaleTimeString()}`
+        );
       });
     }
-  }, [noteId]);
+  }, [id]);
 
   // ensure editing is disabled when browsing trough notes
   useEffect(() => {
     setEditar(false);
-  }, [noteId]);
+  }, [id]);
 
   // ensure that message only shows for 10 seconds
   useEffect(() => {
     if (messageUseCase !== "")
       setTimeout(() => {
         setMessageUseCase("");
-      }, 10000);
+      }, 10200);
   }, [messageUseCase]);
 
   return (
     <div className="noteEditor">
       <NoteContext.Consumer>
-        {([noteId]) =>
-          noteId == "" ? (
-            <NoNoteMenu setNoteId={setNoteId} setEditar={setEditar} />
+        {({ id }) =>
+          id == "" ? (
+            <NoNoteMenu setId={setId} setEditar={setEditar} />
           ) : (
             <span>
               <div className="h-[6vh] flex justify-between mx-4">
@@ -53,19 +55,12 @@ const NoteEditor: FunctionComponent = () => {
                   className="title my-2 w-3/4 truncate"
                   type="text"
                   disabled={!editar}
-                  value={noteTitle}
-                  onChange={(e) => setNoteTitle(e.target.value)}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 ></input>
                 <EditorMenu
                   editar={editar}
                   setEditar={setEditar}
-                  noteId={noteId}
-                  setNoteId={setNoteId}
-                  noteTitle={noteTitle}
-                  setNoteTitle={setNoteTitle}
-                  noteBody={noteBody}
-                  setNoteBody={setNoteBody}
-                  setNoteLastUpdate={setNoteLastUpdate}
                   setMessageUseCase={setMessageUseCase}
                 />
               </div>
@@ -78,14 +73,13 @@ const NoteEditor: FunctionComponent = () => {
               <textarea
                 placeholder="Escribe aquí el cuerpo de tu nota"
                 className="w-full h-[76vh] border-gray-200 border-y-2 bg-gray-50 p-4 font-mono resize-none"
-                value={noteBody}
+                value={body}
                 disabled={!editar}
-                onChange={(e) => setNoteBody(e.target.value)}
+                onChange={(e) => setBody(e.target.value)}
               ></textarea>
               <div className="px-4 justify-between flex">
                 <span>
-                  {noteBody.split(" ").length} palabras | Ult. edición:{" "}
-                  {noteLastUpdate.toLocaleDateString()}
+                  {body.split(" ").length} palabras | Ult. edición: {updatedAt}
                 </span>
               </div>
             </span>

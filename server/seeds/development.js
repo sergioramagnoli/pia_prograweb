@@ -18,18 +18,6 @@ exports.seed = async function (knex) {
   const createNotes = () => {
     return [
       {
-        title: "Name's Jezal, and yes: I am a coward",
-        body: "I dont know what else to say: I'm a coward, but I try to do things right",
-        type: "text",
-        owner_id: "1",
-      },
-      {
-        title: "Name's Ninefingers",
-        body: "Say one thing about Logen Ninefingers, say he is a coward",
-        type: "text",
-        owner_id: "1",
-      },
-      {
         title: "Hiya, it's the goat again",
         body: "I bet by now you are so confused, but just as the elephant said: that's not my problem, bro",
         type: "text",

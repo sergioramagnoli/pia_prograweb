@@ -1,31 +1,20 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useContext } from "react";
 import { createNote, patchNote } from "../apiCalls";
+import { NoteContext } from "../App";
 
 interface IProps {
   editar: boolean;
   setEditar: Function;
-  noteId: string;
-  setNoteId: Function;
-  noteTitle: string;
-  setNoteTitle: Function;
-  noteBody: string;
-  setNoteBody: Function;
-  setNoteLastUpdate: Function;
   setMessageUseCase: Function;
 }
 
 const EditorMenu: FunctionComponent<IProps> = ({
   editar,
   setEditar,
-  noteId,
-  setNoteId,
-  noteTitle,
-  setNoteTitle,
-  noteBody,
-  setNoteBody,
-  setNoteLastUpdate,
   setMessageUseCase,
 }) => {
+  const { id, setId, title, setTitle, body, setBody, setUpdatedAt } =
+    useContext(NoteContext);
   return (
     <div className="flex space-x-4">
       <button
@@ -44,12 +33,12 @@ const EditorMenu: FunctionComponent<IProps> = ({
         className="my-auto hover:scale-110 transition-all"
         onClick={() => {
           if (editar) {
-            if (noteId === "new") {
-              createNote(noteTitle, noteBody).then((res) => {
-                setNoteId(res.id);
+            if (id === "new") {
+              createNote(title, body).then((res) => {
+                setId(res.id);
               });
-            } else if (noteId && noteId !== "") {
-              void patchNote(noteTitle, noteBody, noteId);
+            } else if (id && id !== "") {
+              void patchNote(title, body, id);
             }
           }
           setEditar(!editar);
@@ -72,10 +61,10 @@ const EditorMenu: FunctionComponent<IProps> = ({
       <button
         className="my-auto hover:scale-110 transition-all"
         onClick={() => {
-          setNoteId("");
-          setNoteBody("");
-          setNoteTitle("");
-          setNoteLastUpdate(new Date());
+          setId("");
+          setBody("");
+          setTitle("");
+          setUpdatedAt("");
         }}
       >
         <img

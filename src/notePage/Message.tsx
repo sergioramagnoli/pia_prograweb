@@ -1,4 +1,6 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
+import { deleteNote } from "../apiCalls";
+import { NoteContext } from "../App";
 
 interface IProps {
   messageUseCase: string;
@@ -9,6 +11,7 @@ const Message: FunctionComponent<IProps> = ({
   messageUseCase,
   setMessageUseCase,
 }) => {
+  const { id } = useContext(NoteContext);
   const [width, setWidth] = useState(0);
 
   function load() {
@@ -50,7 +53,12 @@ const Message: FunctionComponent<IProps> = ({
             <p className="text-red-700">
               ¿Seguro de que desea eliminar la nota?
             </p>
-            <button className="hover:scale-110 transition-all">
+            <button
+              className="hover:scale-110 transition-all"
+              onClick={() => {
+                deleteNote(id).then(() => {});
+              }}
+            >
               <img
                 src="/icons/done.svg"
                 alt="confirm button"
