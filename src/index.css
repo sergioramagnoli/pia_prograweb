@@ -1,33 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 
+
+/* GENERAL */
+html {
+ @apply bg-stone-800;
+}
+
+* {
+  @apply text-gray-200;
+}
+
+
 /* CLASSES */
-.container {
-  @apply max-w-[1200px] flex h-[600px] h-[100vh] mx-8;
+#container {
+  @apply flex h-[600px] h-[100vh] ;
 }
 .title {
-  @apply text-3xl my-auto font-semibold;
+  @apply text-3xl font-semibold;
 }
+
 .noteContainer {
-  @apply w-[30%] h-[100vh] overflow-hidden overflow-y-scroll pr-[0.2rem];
+  @apply w-[20%] h-[100vh] overflow-hidden overflow-y-scroll pr-[1rem];
 }
+
 .header {
   @apply flex items-center h-[8vh] ml-2 flex-row-reverse;
 }
+
 .noteEditor {
-  @apply border-gray-200 border-2 border-b-0 rounded-t-lg w-full ml-2 h-[92vh] mt-auto;
+  @apply w-[50%] h-[100vh] border-x-2 border-gray-200 mx-auto mr-[20%];
 }
+
+.noteEditor textarea {
+  @apply w-full h-[80vh] border-gray-200 border-y-2 bg-gray-50 p-4 resize-none bg-stone-800;
+}
+
 .note {
-  @apply rounded-lg border-gray-200 border-2 mt-2 first:mt-0 first:rounded-t-none first:border-t-0 last:mb-[2.5vh] first:pt-6;
+  @apply mt-2 first:mt-0 first:rounded-t-none first:border-t-0 last:mb-[2.5vh] first:pt-6;
 }
 .note .title {
-  @apply text-xl text-gray-500 font-normal;
+  @apply text-2xl text-gray-300 border-b-2 border-gray-300 p-2;
 }
 .note .body {
-  @apply font-mono text-gray-500;
+  @apply text-gray-300 p-2;
 }
 
 /* ELEMENTS */
@@ -37,21 +53,19 @@ input {
 button {
   text-align: left;
 }
+img {
+  @apply invert;
+}
 
 /*Custom scroll bar for notes*/
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 2px;
 }
-
-.noteContainer::-webkit-scrollbar-track {
-  @apply mb-[2.5vh];
-}
-
 ::-webkit-scrollbar-track {
-  @apply bg-white;
+  @apply bg-stone-800;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-100 hover:bg-gray-200 rounded-md;
+  @apply bg-stone-300 hover:bg-stone-600;
 }
 
 @tailwind utilities;
