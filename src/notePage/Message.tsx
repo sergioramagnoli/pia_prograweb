@@ -1,6 +1,6 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { deleteNote } from "../apiCalls";
-import { NoteContext } from "../App";
+import { NoteContext } from "./NotesProvider";
 
 interface IProps {
   messageUseCase: string;
@@ -11,10 +11,9 @@ const Message: FunctionComponent<IProps> = ({
   messageUseCase,
   setMessageUseCase,
 }) => {
-  const { id } = useContext(NoteContext);
+  const { id, setId } = useContext(NoteContext);
   const [width, setWidth] = useState(0);
-
-  function load() {
+  const load = () => {
     let w2 = 0;
     let increasingWidth = setInterval(() => {
       setWidth(w2 + 0.1);
@@ -26,7 +25,7 @@ const Message: FunctionComponent<IProps> = ({
     function stop() {
       clearInterval(increasingWidth);
     }
-  }
+  };
 
   useEffect(() => {
     if (messageUseCase !== "") load();
@@ -56,7 +55,9 @@ const Message: FunctionComponent<IProps> = ({
             <button
               className="hover:scale-110 transition-all"
               onClick={() => {
-                deleteNote(id).then(() => {});
+                deleteNote(id).then(() => {
+                  setId("");
+                });
               }}
             >
               <img
@@ -65,6 +66,10 @@ const Message: FunctionComponent<IProps> = ({
                 className="h-6 my-auto mr-6"
               />
             </button>
+          </span>
+        ) : messageUseCase === "newNoteSaved" ? (
+          <span>
+            <p className="text-green-700">Se guardó la nota</p>
           </span>
         ) : (
           <span></span>

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.cjs",
   "scripts": {
-    "dev": "nodemon index.cjs",
+    "dev": "docker start postgres_server && nodemon index.cjs",
     "migrate": "knex migrate:latest --knexfile ./knexfile.js",
     "makeseed": "knex seed:make development ./knexfile.js",
     "seed": "knex seed:run --knexfile ./knexfile.js",

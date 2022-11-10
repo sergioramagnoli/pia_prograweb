@@ -4,15 +4,16 @@ import { getNoteById } from "../apiCalls";
 import { Note } from "../assets/types";
 import NoNoteMenu from "./NoNoteMenu";
 import Message from "./Message";
-import { NoteContext } from "../App";
+import { NoteContext } from "./NotesProvider";
 
 const NoteEditor: FunctionComponent = () => {
   const [editar, setEditar] = useState(false);
   const [messageUseCase, setMessageUseCase] = useState("");
 
-  const { id, setId, body, setBody, title, setTitle, updatedAt, setUpdatedAt } =
-    useContext(NoteContext);
-
+  const { id } = useContext(NoteContext);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [updatedAt, setUpdatedAt] = useState("");
   // get note info every time the id changes
   useEffect(() => {
     if (id !== "" && id !== "new") {
@@ -21,7 +22,7 @@ const NoteEditor: FunctionComponent = () => {
         setBody(note.body);
         setTitle(note.title);
         setUpdatedAt(
-          `${updated_at.toLocaleDateString()} - ${updated_at.toLocaleTimeString()}`
+          `${updated_at.toLocaleDateString()} a las ${updated_at.toLocaleTimeString()}`
         );
       });
     }
@@ -29,7 +30,7 @@ const NoteEditor: FunctionComponent = () => {
 
   // ensure editing is disabled when browsing trough notes
   useEffect(() => {
-    setEditar(false);
+    setEditar(id === "new");
   }, [id]);
 
   // ensure that message only shows for 10 seconds
@@ -44,15 +45,15 @@ const NoteEditor: FunctionComponent = () => {
     <div className="noteEditor">
       <NoteContext.Consumer>
         {({ id }) =>
-          id == "" ? (
-            <NoNoteMenu setId={setId} setEditar={setEditar} />
+          id === "" ? (
+            <NoNoteMenu setEditar={setEditar} />
           ) : (
-            <span>
-              <div className="h-[6vh] flex justify-between mx-4">
+            <>
+              <div className="h-[10vh] flex justify-between mx-4">
                 <input
                   placeholder="Nota sin nombre"
                   maxLength={80}
-                  className="title my-2 w-3/4 truncate"
+                  className="title w-3/4 truncate h-full"
                   type="text"
                   disabled={!editar}
                   value={title}
@@ -62,6 +63,11 @@ const NoteEditor: FunctionComponent = () => {
                   editar={editar}
                   setEditar={setEditar}
                   setMessageUseCase={setMessageUseCase}
+                  title={title}
+                  setTitle={setTitle}
+                  body={body}
+                  setBody={setBody}
+                  setUpdatedAt={setUpdatedAt}
                 />
               </div>
               <div hidden={messageUseCase === ""}>
@@ -71,18 +77,15 @@ const NoteEditor: FunctionComponent = () => {
                 />
               </div>
               <textarea
-                placeholder="Escribe aquí el cuerpo de tu nota"
-                className="w-full h-[76vh] border-gray-200 border-y-2 bg-gray-50 p-4 font-mono resize-none"
+                placeholder="Escribe aquí tu nota"
                 value={body}
                 disabled={!editar}
                 onChange={(e) => setBody(e.target.value)}
               ></textarea>
               <div className="px-4 justify-between flex">
-                <span>
-                  {body.split(" ").length} palabras | Ult. edición: {updatedAt}
-                </span>
+                {body.split(" ").length} palabras | Última edición: {updatedAt}
               </div>
-            </span>
+            </>
           )
         }
       </NoteContext.Consumer>

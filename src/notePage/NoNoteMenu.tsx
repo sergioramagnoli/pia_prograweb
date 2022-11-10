@@ -1,18 +1,19 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
+import { NoteContext } from "./NotesProvider";
 
-interface IProps {
-  setId: Function;
+interface P {
   setEditar: Function;
 }
 
-const NoNoteMenu: FunctionComponent<IProps> = ({ setId, setEditar }) => {
+const NoNoteMenu: FunctionComponent<P> = ({ setEditar }) => {
+  const { setId } = useContext(NoteContext);
   return (
     <div className="grid place-content-center h-full space-y-4">
       <p className={"max-w-[270px] text-center"}>
         Selecciona una nota para editarla o crea una nueva
       </p>
       <button
-        className="flex p-2 rounded-lg border-gray-200 border-2 place-content-center"
+        className="flex p-2 rounded-full border-gray-200 border-2 place-content-center"
         onClick={() => {
           setId("new");
           setEditar(true);

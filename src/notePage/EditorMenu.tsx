@@ -1,20 +1,29 @@
 import React, { FunctionComponent, useContext } from "react";
 import { createNote, patchNote } from "../apiCalls";
-import { NoteContext } from "../App";
+import { NoteContext } from "./NotesProvider";
 
 interface IProps {
   editar: boolean;
   setEditar: Function;
   setMessageUseCase: Function;
+  title: string;
+  setTitle: Function;
+  body: string;
+  setBody: Function;
+  setUpdatedAt: Function;
 }
 
 const EditorMenu: FunctionComponent<IProps> = ({
   editar,
   setEditar,
   setMessageUseCase,
+  title,
+  setTitle,
+  body,
+  setBody,
+  setUpdatedAt,
 }) => {
-  const { id, setId, title, setTitle, body, setBody, setUpdatedAt } =
-    useContext(NoteContext);
+  const { id, setId } = useContext(NoteContext);
   return (
     <div className="flex space-x-4">
       <button
@@ -35,10 +44,12 @@ const EditorMenu: FunctionComponent<IProps> = ({
           if (editar) {
             if (id === "new") {
               createNote(title, body).then((res) => {
+                setMessageUseCase("newNoteSaved");
                 setId(res.id);
               });
             } else if (id && id !== "") {
               void patchNote(title, body, id);
+              setMessageUseCase("changesSaved");
             }
           }
           setEditar(!editar);
