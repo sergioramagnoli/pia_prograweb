@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.cjs",
   "scripts": {
+    "create": "docker pull postgres && docker run --name postgres_server -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_USER=postgres -e POSTGRES_DB=notesapp -p 5432:5432 -d postgres",
     "dev": "docker start postgres_server && nodemon index.cjs",
     "migrate": "knex migrate:latest --knexfile ./knexfile.js",
     "makeseed": "knex seed:make development ./knexfile.js",
