@@ -3,7 +3,9 @@ module.exports = {
   content: ["./src/**/*.{ts,tsx}", "./src/*.{ts,tsx}"],
   theme: {
     extend: {
-      fontFamily: {},
+      fontFamily: {
+        sans: ["Inter"],
+      },
     },
   },
   plugins: [],

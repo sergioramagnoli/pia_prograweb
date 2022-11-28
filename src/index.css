@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Sono:wght@200;300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 
@@ -14,14 +15,18 @@ html {
 
 /* CLASSES */
 #container {
-  @apply flex h-[600px] h-[100vh] ;
+  @apply h-[100vh] ;
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+  grid-gap: 2rem;
 }
+
 .title {
-  @apply text-3xl font-semibold;
+  @apply text-3xl font-semibold w-full;
 }
 
 .noteContainer {
-  @apply w-[20%] h-[100vh] overflow-hidden overflow-y-scroll pr-[1rem];
+  @apply h-[100vh] overflow-hidden overflow-y-scroll pr-[1rem];
 }
 
 .header {
@@ -29,18 +34,18 @@ html {
 }
 
 .noteEditor {
-  @apply w-[50%] h-[100vh] border-x-2 border-gray-200 mx-auto mr-[20%];
+  @apply w-full h-[95vh] my-auto border-l border-y border-gray-200 mx-auto mr-[2rem] rounded-l-2xl;
 }
 
 .noteEditor textarea {
-  @apply w-full h-[80vh] border-gray-200 border-y-2 bg-gray-50 p-4 resize-none bg-stone-800;
+  @apply w-full h-[80vh] border-gray-200 border-y bg-gray-50 p-4 resize-none bg-stone-800;
 }
 
 .note {
   @apply mt-2 first:mt-0 first:rounded-t-none first:border-t-0 last:mb-[2.5vh] first:pt-6;
 }
 .note .title {
-  @apply text-2xl text-gray-300 border-b-2 border-gray-300 p-2;
+  @apply text-2xl text-gray-300 border-b border-gray-300 p-2;
 }
 .note .body {
   @apply text-gray-300 p-2;

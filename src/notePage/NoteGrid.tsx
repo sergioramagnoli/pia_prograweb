@@ -24,7 +24,7 @@ const NoteGrid: FunctionComponent = () => {
               key={note.id}
               className={note.id === id ? "note opacity-75" : "note"}
             >
-              <button onClick={() => setId(note.id)}>
+              <button onClick={() => setId(note.id)} className="w-full">
                 <h3 className="title">{note.title}</h3>
                 <p className="body">
                   {note.body.slice(0, 122) +

@@ -82,7 +82,7 @@ const NoteEditor: FunctionComponent = () => {
                 disabled={!editar}
                 onChange={(e) => setBody(e.target.value)}
               ></textarea>
-              <div className="px-4 justify-between flex">
+              <div className="px-4 pt-1 justify-between flex align-middles">
                 {body.split(" ").length} palabras | Última edición: {updatedAt}
               </div>
             </>
