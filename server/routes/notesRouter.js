@@ -3,7 +3,7 @@ const Note = require("../models/note");
 
 const router = express.Router();
 
-router.get("/notes", async (req, res, next) => {
+router.get("/notes", async (req, res) => {
   try {
     const notes = await Note.query().orderBy("updated_at", "desc");
     res.json(notes);
